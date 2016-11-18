@@ -25,6 +25,7 @@ gem 'aws-sdk' # configure in config/application.rb
 gem 'seed_dump' # import / export seed data from existing db (https://github.com/rroblak/seed_dump)
 gem 'figaro' # private ENV vars for safe deployment
 gem 'twitter'
+gem 'will_paginate', '~> 3.1.0'
 
 group :development, :test do
   gem 'byebug'
