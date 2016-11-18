@@ -1,0 +1,19 @@
+<h1>Keyword: "kill trump"</h1>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>User</th>
+    <th>Tweet</th>
+    <th></th>
+  </thead>
+
+  <body>
+    <% @tweets.each do |tweet| %>
+      <tr>
+        <td><%= image_tag tweet.handle.avatar, style: 'max-width: 40px; margin-right: 5px' %><%= link_to tweet.handle.name, "https://twitter.com/#{tweet.handle.screen_name}" %></td>
+        <td><%= tweet.text %></td>
+        <td><%= link_to 'link', tweet.link %></td>
+      </tr>
+    <% end %>
+  </body>
+</table>

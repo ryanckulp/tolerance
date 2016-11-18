@@ -11,15 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161118041033) do
+ActiveRecord::Schema.define(version: 20161118044518) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "handles", force: :cascade do |t|
-    t.string "screen_name"
-    t.string "name"
-    t.text   "avatar"
+    t.string   "screen_name"
+    t.string   "name"
+    t.text     "avatar"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "keywords", force: :cascade do |t|
@@ -29,11 +31,14 @@ ActiveRecord::Schema.define(version: 20161118041033) do
   end
 
   create_table "tweets", force: :cascade do |t|
-    t.text    "text"
-    t.text    "link"
-    t.text    "media"
-    t.integer "likes"
-    t.integer "handle_id"
+    t.text     "text"
+    t.text     "link"
+    t.text     "media"
+    t.integer  "likes"
+    t.integer  "handle_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "external_id"
   end
 
   add_index "tweets", ["handle_id"], name: "index_tweets_on_handle_id", using: :btree

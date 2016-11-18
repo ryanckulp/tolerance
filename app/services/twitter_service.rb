@@ -17,15 +17,15 @@ class TwitterService
     end
 
     def process_tweet(tweet)
+      return if Tweet.find_by(external_id: tweet.id)
+
       handle = Handle.find_or_create_by(screen_name: tweet.user.handle)
       handle.update(name: tweet.user.name, avatar: tweet.user.profile_image_uri.to_s)
 
-      tweet_params = {text: tweet.full_text, link: tweet.url.to_s, handle_id: handle.id}
-      t = Tweet.create(tweet_params)
+      tweet_params = {external_id: tweet.id, text: tweet.full_text, link: tweet.url.to_s,
+                      likes: tweet.favorite_count, media: tweet.media, handle_id: handle.id}
 
-      t.media << tweet.media
-      t.media.flatten!
-      t.save!
+      t = Tweet.create(tweet_params)
     end
 
   end

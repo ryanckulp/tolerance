@@ -11,4 +11,12 @@ Rails.application.routes.draw do
     delete 'logout', to: "sessions#destroy", as: 'logout'
   end
 
+  get 'tweets', to: "tweets#index"
+
+  namespace :api, defaults: {format: 'json'} do
+    namespace :v1 do
+      get 'tweets', to: 'tweets#index'
+    end
+  end
+
 end
