@@ -17,6 +17,7 @@ class TwitterService
     end
 
     def process_tweet(tweet)
+      return if tweet.retweeted_tweet?
       return if Tweet.find_by(external_id: tweet.id)
 
       handle = Handle.find_or_create_by(screen_name: tweet.user.handle)
