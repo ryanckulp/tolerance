@@ -26,6 +26,7 @@ class TwitterService
                       likes: tweet.favorite_count, media: tweet.media, handle_id: handle.id}
 
       t = Tweet.create(tweet_params)
+      t.update(created_at: tweet.created_at.to_datetime)
     end
 
   end
