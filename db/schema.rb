@@ -11,10 +11,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913110734) do
+ActiveRecord::Schema.define(version: 20161118041033) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "handles", force: :cascade do |t|
+    t.string "screen_name"
+    t.string "name"
+    t.text   "avatar"
+  end
+
+  create_table "keywords", force: :cascade do |t|
+    t.text     "query"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "tweets", force: :cascade do |t|
+    t.text    "text"
+    t.text    "link"
+    t.text    "media"
+    t.integer "likes"
+    t.integer "handle_id"
+  end
+
+  add_index "tweets", ["handle_id"], name: "index_tweets_on_handle_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -34,4 +56,5 @@ ActiveRecord::Schema.define(version: 20150913110734) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "tweets", "handles"
 end
