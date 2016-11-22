@@ -1,12 +1,14 @@
 class Api::V1::TweetsController < ApplicationController
 
   def index
-    limit = !!params[:limit] ? params[:limit].to_i : 1000
-    since = params[:since] || 7.days.ago
-    from_date = since.class == String ? DateTime.strptime(since, '%Y-%m-%d') : since
+    limit = tweet_params[:limit] ||  1000
+    since = tweet_params[:since] || 7.days.ago
 
+    from_date = DateTime.strptime(since, '%Y-%m-%d') || 7.days.ago
     tweets = Tweet.where(created_at: from_date..Time.current)
-    tweets = tweets.map(&:link) if !!params[:links_only]
+
+    tweets = tweets.joins(:handle).where(tweets: {handle_id: Handle.find_by(screen_name: tweet_params[:handle]).id }) if !!tweet_params[:handle]
+    tweets = tweets.map(&:link) if tweet_params.keys.any? { |key| key.downcase == 'links_only' }
 
     render json: {meta: {success: true}, data: tweets.first(limit)}
   end
@@ -14,7 +16,7 @@ class Api::V1::TweetsController < ApplicationController
   private
 
     def tweet_params
-      params.require(:tweet).permit(:handle, :link, :since, :limit, :links_only)
+      params.permit(:handle, :limit, :links_only, :since)
     end
 
 end
