@@ -19,8 +19,9 @@ Base URL: https://lib-tolerance.herokuapp.com/api/v1
 Simply `GET` to /tweets with the following (optional) params:
 
 * `since` (string in YYYY-MM-DD format, to only retrieve tweets since this day)
+* `handle` (a twitter username to target, ie: handle=acejurado)
 * `limit` (integer representing a max number of tweets to return; threshold and default is 1000)
-* `links_only=true` (default false, will return only links to tweets)
+* `links_only` (default false, will return only direct tweet links)
 * more TBD
 
 Every response contains 2 nodes -- meta, and data.
